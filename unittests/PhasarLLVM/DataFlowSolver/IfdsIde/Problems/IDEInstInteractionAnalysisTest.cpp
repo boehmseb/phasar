@@ -120,6 +120,7 @@ protected:
       const auto *Fun = IRDB->getFunctionDefinition(std::get<0>(Truth));
       const auto *Line = getNthInstruction(Fun, std::get<1>(Truth));
       auto ResultMap = IIASolver.resultsAt(Line);
+      bool FactFound = false;
       for (auto &[Fact, Value] : ResultMap) {
         std::string FactStr = llvmIRToString(Fact);
         llvm::StringRef FactRef(FactStr);
@@ -127,8 +128,15 @@ protected:
           LOG_IF_ENABLE(BOOST_LOG_SEV(lg::get(), DFADEBUG)
                         << "Checking variable: " << FactStr);
           EXPECT_EQ(std::get<3>(Truth), Value);
+          FactFound = true;
         }
       }
+      if (!FactFound) {
+        LOG_IF_ENABLE(BOOST_LOG_SEV(lg::get(), DFADEBUG)
+                      << "Variable '" << std::get<2>(Truth) << "' missing at '"
+                      << llvmIRToShortString(Line) << "'.");
+      }
+      EXPECT_TRUE(FactFound);
     }
   }
 
