@@ -573,6 +573,23 @@ TEST_F(IDEInstInteractionAnalysisTest, HandleGlobalTest_04) {
   doAnalysisAndCompareResults("global_04_cpp.ll", GroundTruth, false);
 }
 
+TEST_F(IDEInstInteractionAnalysisTest, HandleGlobalTest_05) {
+  std::set<IIACompactResult_t> GroundTruth;
+  GroundTruth.emplace(
+      std::tuple<std::string, size_t, std::string, BitVectorSet<std::string>>(
+          "main", 1, "GlobalFeature", {"0"}));
+  GroundTruth.emplace(
+      std::tuple<std::string, size_t, std::string, BitVectorSet<std::string>>(
+          "main", 4, "GlobalFeature", {"0", "4"}));
+  GroundTruth.emplace(
+      std::tuple<std::string, size_t, std::string, BitVectorSet<std::string>>(
+          "_Z4initi", 1, "GlobalFeature", {"0"}));
+  GroundTruth.emplace(
+      std::tuple<std::string, size_t, std::string, BitVectorSet<std::string>>(
+          "_Z4initi", 5, "GlobalFeature", {"0", "4"}));
+  doAnalysisAndCompareResults("global_05_cpp.ll", GroundTruth, true);
+}
+
 TEST_F(IDEInstInteractionAnalysisTest, KillTest_01) {
   std::set<IIACompactResult_t> GroundTruth;
   GroundTruth.emplace(
