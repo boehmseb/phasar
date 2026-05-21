@@ -7,3 +7,5 @@ if(PHASAR_USE_Z3)
         ${Z3_LIBRARIES}
     )
 endif()
+
+add_phasar_unittest(PathDagTest.cpp)

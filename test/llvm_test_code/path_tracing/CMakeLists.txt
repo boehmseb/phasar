@@ -20,6 +20,8 @@ set(PATH_TRACING_FILES
   intra_07.cpp
   intra_08.cpp
   intra_09.cpp
+  intra_10.cpp
+  intra_11.cpp
   other_01.cpp
 )
 
